@@ -6,7 +6,6 @@ function [fout] = FFT_ALG(fin)
         fout = zeros(1, N);
         feven = FFT_ALG(fin(1:2:end));
         fodd = FFT_ALG(fin(2:2:end));
-        if N 
         for k = 1:N/2
             t = fodd(k) * exp(-1i * 2 * pi * (k-1) / N);  % use k-1 to align MATLAB indexing
             fout(k) = feven(k) + t;
