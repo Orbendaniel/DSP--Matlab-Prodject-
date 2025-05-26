@@ -1,3 +1,3 @@
-x = [1,2,4,8,16];
-X = FFT_ALG(x);
-disp(X);
+x = [1,2,4,8];
+xr = IFFT_ALG(FFT_ALG(x));
+disp(xr);
