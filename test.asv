@@ -169,8 +169,8 @@ x1r = IFFT2_ALG(X1r);
 
 subplot(2,1,1);
 imshow(x1r, []);
-title('x[n,m]');
+title('y1[n,m]');
 
 subplot(2,1,2);
 imshow(x1r, []);
-title('x[n,m]');
+title('y2[n,m]');
