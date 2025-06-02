@@ -4,44 +4,44 @@
 % disp(xr);
 % 
 % %part ד
-% N  = 32;
-% M  = 64;
-% B1 = 7;
-% B2 = 7;
-% 
-% x = zeros(N, M);
-% x(1:B1, 1:B2) = 1;
-% 
-% figure;
-% imagesc(x);
-% axis equal tight;
-% xlabel('m');
-% ylabel('n');
-% title('x[n,m]');
-% colorbar;
+N  = 32;
+M  = 64;
+B1 = 7;
+B2 = 7;
 
-% % compute its 2-D DFT using your FFT2_ALG
-% X_alg = FFT2_ALG(x);
-% 
-% % visualize the magnitude 2D
-% figure;
-% imagesc(abs(X_alg));
-% axis equal tight;
-% xlabel('k_2');
-% ylabel('k_1');
-% title('X[k1,k2] via FFT2ALG');
-% colorbar;
-% 
-% % visualize the magnitude 3D 
-% [K1, K2] = meshgrid(0:M-1, 0:N-1);
-% figure;
-% surf(K2, K1, abs(X_alg));
-% shading interp;
-% xlabel('k_2');
-% ylabel('k_1');
-% zlabel('|X[k_1,k_2]|');
-% title('3D Surface of 2D DFT Magnitude');
+x = zeros(N, M);
+x(1:B1, 1:B2) = 1;
 
+figure;
+imagesc(x);
+axis equal tight;
+xlabel('m');
+ylabel('n');
+title('x[n,m]');
+colorbar;
+
+% compute its 2-D DFT using your FFT2_ALG
+X_alg = FFT2_ALG(x);
+
+% visualize the magnitude 2D
+figure;
+imagesc(abs(X_alg));
+axis equal tight;
+xlabel('k_2');
+ylabel('k_1');
+title('X[k1,k2] via FFT2ALG');
+colorbar;
+
+% visualize the magnitude 3D 
+[K1, K2] = meshgrid(0:M-1, 0:N-1);
+figure;
+surf(K2, K1, abs(X_alg));
+shading interp;
+xlabel('k_2');
+ylabel('k_1');
+zlabel('|X[k_1,k_2]|');
+title('3D Surface of 2D DFT Magnitude');
+%{
 % %part ה
 [dist_image_1,dist_image_2,noised_image,imp_resp_image]=img_gen('IDO','ALON');
 figure;
@@ -66,7 +66,9 @@ h0 = h(:,1);
 disp(h0)
 imshow(imp_resp_image, []);
 title('imp\_resp\_image');
+%}
 
+%{
 % %part ו
 pad_h0 = zeros(6,1);
 for i = 1:6
@@ -145,94 +147,38 @@ ylabel('Output');
 legend;
 grid on;
 %}
-% %part ח
-
-pad_h1 = zeros(128,128);
-pad_h2 = zeros(70,170);
+%}
+%part ח
+%{
+pad_h = zeros(128,128);
 for i = 1:128
     for j = 1:128
         
         if i< 4 && j < 6
-            pad_h1(i,j) = h(i,j);
+            pad_h(i,j) = h(i,j);
         else
-            pad_h1(i,j) = 0;
-        end
-    end
-end
-for i = 1:70
-    for j = 1:170
-        
-        if i< 4 && j < 6
-            pad_h2(i,j) = h(i,j);
-        else
-            pad_h2(i,j) = 0;
+            pad_h(i,j) = 0;
         end
     end
 end
 
-pad_H1 = FFT2_ALG(pad_h1);
-pad_H2 = FFT2_ALG(pad_h2);
+pad_H = FFT2_ALG(pad_h);
 Y1 = FFT2_ALG(y1);
-Y2 = FFT2_ALG(y2);
-X1r = Y1./pad_H1;
-X2r = Y2./pad_H2;
+%Y2 = FFT2_ALG(y2);
+X1r = Y1/pad_H;
+%X2r = Y2/pad_H;
 x1r = IFFT2_ALG(X1r);
-x2r = IFFT2_ALG(X2r);
+%x2r = IFFT2_ALG(X2r);
 
-%{
 subplot(2,1,1);
 imshow(x1r, []);
-title('x1[n,m]');
+title('x[n,m]');
 
 subplot(2,1,2);
-imshow(x2r, []);
-title('x2[n,m]');
-disp(x1r);
+imshow(x1r, []);
+title('x[n,m]');
 %}
 
-% bounus part י
-%{
-pad_2h2 = zeros(100,220);
-for i = 1:100
-    for j = 1:220
-        if i< 4 && j < 6
-            pad_2h2(i,j) = h(i,j);
-        end
-    end
-end
-pad_y2 = zeros(100,220);
-for i = 1:70
-    for j = 1:170
-            pad_y2(i+30,j+50) = y2(i,j);
-    end
-end
-
-pad_2H2 = FFT2_ALG(pad_2h2);
-pad_Y2 = FFT2_ALG(pad_y2);
-X2r2 = pad_Y2./pad_2H2;
-x2r2 = IFFT2_ALG(X2r2);
-
-subplot(2,1,1);
-imshow(x2r2, []);
-title('x2_improved[n,m]');
-
-subplot(2,1,2);
-imshow(x2r, []);
-title('x2[n,m]');
-disp(x1r);
+%part 3 - audio signal 
 
 
-%}
-
-
-x2r2 = deconv(y2,h);
-
-subplot(2,1,1);
-imshow(x2r2, []);
-title('x2_improved[n,m]');
-
-
-subplot(2,1,2);
-imshow(x2r, []);
-title('x2[n,m]');
-disp(x1r);
