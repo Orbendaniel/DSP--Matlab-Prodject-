@@ -47,7 +47,7 @@ Yf=fft(yn);
 
 %sample Yf
 idx_s = 1:512:N;
-Ysub = Yf(idx);
+Ysub = Yf(idx_s);
 
 %swap between the first N/2 values of Ysub and the last N/2 values
 L = length(Ysub);

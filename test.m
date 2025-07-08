@@ -42,7 +42,8 @@ xlabel('k_2');
 ylabel('k_1');
 zlabel('|X[k_1,k_2]|');
 title('3D Surface of 2D DFT Magnitude');
-%{
+%}
+
 % %part ה
 [dist_image_1,dist_image_2,noised_image,imp_resp_image]=img_gen('IDO','ALON');
 figure;
@@ -67,8 +68,7 @@ h0 = h(:,1);
 disp(h0)
 imshow(imp_resp_image, []);
 title('imp\_resp\_image');
-%}
-%}
+
 %{
 % %part ו
 pad_h0 = zeros(6,1);
@@ -87,6 +87,7 @@ end
 H0(4) = pad_H0(5);
 
 disp(H0)
+%}
 %{
 % %part ז
 % cyclic convelution - by fft
@@ -148,35 +149,48 @@ ylabel('Output');
 legend;
 grid on;
 %}
-%}
 %part ח
-%{
-pad_h = zeros(128,128);
+
+pad_h1 = zeros(128,128);
 for i = 1:128
     for j = 1:128
         
         if i< 4 && j < 6
-            pad_h(i,j) = h(i,j);
+            pad_h1(i,j) = h(i,j);
         else
-            pad_h(i,j) = 0;
+            pad_h1(i,j) = 0;
         end
     end
 end
 
-pad_H = FFT2_ALG(pad_h);
+pad_h2 = zeros(70,170);
+for i = 1:70
+    for j = 1:170
+        
+        if i< 4 && j < 6
+            pad_h2(i,j) = h(i,j);
+        else
+            pad_h2(i,j) = 0;
+        end
+    end
+end
+
+
+pad_H1 = FFT2_ALG(pad_h1);
+pad_H2 = FFT2_ALG(pad_h2);
 Y1 = FFT2_ALG(y1);
-%Y2 = FFT2_ALG(y2);
-X1r = Y1/pad_H;
-%X2r = Y2/pad_H;
+Y2 = FFT2_ALG(y2);
+X1r = Y1./pad_H1;
+X2r = Y2./pad_H2;
 x1r = IFFT2_ALG(X1r);
-%x2r = IFFT2_ALG(X2r);
+x2r = IFFT2_ALG(X2r);
 
 subplot(2,1,1);
 imshow(x1r, []);
-title('x[n,m]');
+title('x1[n,m]');
 
 subplot(2,1,2);
-imshow(x1r, []);
-title('x[n,m]');
-%}
+imshow(x2r, []);
+title('x2[n,m]');
+
 
