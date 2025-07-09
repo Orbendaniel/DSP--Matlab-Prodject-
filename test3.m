@@ -8,7 +8,8 @@ x = getaudiodata(rec);              % x is N×1 vector
 filename = 'myRecording3.wav';
 audiowrite(filename, x, fs);
 % Play it
-%sound(x, fs);   % fs is your 16 000 Hz sampling rate
+sound(x, fs);   % fs is your 16 000 Hz sampling rate
+%
 %}
 
 d1=0.323132571;
@@ -85,6 +86,6 @@ plot(t, yn_dec);
 xlabel('Time (s)');
 ylabel('Amplitude');
 title('Noisy decimated Signal y2[n] = x[n] + z[n]');
-
+%sound(yn, fs)
 
 

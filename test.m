@@ -44,7 +44,7 @@ zlabel('|X[k_1,k_2]|');
 title('3D Surface of 2D DFT Magnitude');
 %}
 
-% %part ה
+%part ה
 [dist_image_1,dist_image_2,noised_image,imp_resp_image]=img_gen('IDO','ALON');
 figure;
 y1 = dist_image_1;
@@ -69,8 +69,8 @@ disp(h0)
 imshow(imp_resp_image, []);
 title('imp\_resp\_image');
 
-%{
-% %part ו
+%{%
+%part ו
 pad_h0 = zeros(6,1);
 for i = 1:6
     if i< 4
@@ -87,7 +87,8 @@ end
 H0(4) = pad_H0(5);
 
 disp(H0)
-%}
+%}%
+
 %{
 % %part ז
 % cyclic convelution - by fft
